@@ -41,8 +41,27 @@ Player.prototype.update = function() {
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+//Handle key presses and moves the player within the canvas
+Player.prototype.handleInput = function(key) {
+  switch (key) {
+    case 'up': {
+      (this.y >= 0) ? this.y -=80 : false;
+      break;
+    }
+    case 'right': {
+      (this.x <= 300) ? this.x +=100 : false;
+      break;
+    }
+    case 'down': {
+      (this.y <=300) ? this.y +=80 : false;
+      break;
+    }
+    case 'left': {
+      (this.x >=100) ? this.x -=100 : false;
+      break;
+    }
+  }
 
-Player.prototype.handleInput = function() {
 
 };
 
