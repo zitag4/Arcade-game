@@ -6,6 +6,8 @@ function Enemy(x, y, v) {
     this.x = x;
 	  this.y = y;
     this.v = v;
+    this.width = 60;
+    this.height = 20;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -38,12 +40,15 @@ function Player(x, y) {
   this.x = y;
   this.y = x;
   this.sprite = 'images/char-pink-girl.png';
+  this.width = 60;
+  this.height = 20;
 }
 
 let player = new Player(300, 200);
 // This class requires an update(), render() and
 // a handleInput() method.
 Player.prototype.update = function() {
+  this.collision();
 
 };
 //Draw player image to canvas
@@ -54,7 +59,7 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(key) {
   switch (key) {
     case 'up': {
-      (this.y >= 0) ? this.y -=80 : false;
+      (this.y >= 30) ? this.y -=80 : false;
       break;
     }
     case 'right': {
@@ -80,6 +85,20 @@ let allEnemies = [];
 allEnemies.push(enemy1, enemy2, enemy3);
 
 // Place the player object in a variable called player
+
+//Enemy-player collisions
+Player.prototype.collision = function() {
+  for (let i=0; i < allEnemies.length; i++) {
+    if (this.x < allEnemies[i].x + allEnemies[i].width &&
+        this.x + this.width > allEnemies[i].x &&
+        this.y < allEnemies[i].y + allEnemies[i].height &&
+        this.y + this.height > allEnemies[i].y) {
+          this.x = 200;
+				  this.y = 300;
+        }
+ }
+}
+
 
 
 
