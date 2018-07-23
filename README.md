@@ -20,5 +20,3 @@ The player has to cross the enemies rode and reach the water without colliding w
 ## Contributing
 
 This project is part of the Google Udacity Front-End Web Developer Nanodegree program.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
