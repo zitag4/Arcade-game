@@ -30,6 +30,7 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
 //create enemies in different rows and with different speeds
 let enemy1 = new Enemy(-100, 60, 300);
 let enemy2 = new Enemy(-100, 140, 130);
@@ -49,12 +50,14 @@ let player = new Player(300, 200);
 // a handleInput() method.
 Player.prototype.update = function() {
   this.collision();
-
+  this.winGame();
 };
+
 //Draw player image to canvas
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
 //Handle key presses and moves the player within the canvas
 Player.prototype.handleInput = function(key) {
   switch (key) {
@@ -88,7 +91,7 @@ allEnemies.push(enemy1, enemy2, enemy3);
 
 //Enemy-player collisions
 Player.prototype.collision = function() {
-  for (let i=0; i < allEnemies.length; i++) {
+  for (i=0; i < allEnemies.length; i++) {
     if (this.x < allEnemies[i].x + allEnemies[i].width &&
         this.x + this.width > allEnemies[i].x &&
         this.y < allEnemies[i].y + allEnemies[i].height &&
@@ -99,7 +102,19 @@ Player.prototype.collision = function() {
  }
 }
 
-
+Player.prototype.winGame = function() {
+  if(this.y == -20 && (this.x == 0 || this.x == 100 || this.x == 200
+    || this.x == 300 || this.x == 400)) {
+      ctx.textAlign='center';
+      ctx.fillStyle = "white";
+      ctx.font = "20px Forte Regular";
+      ctx.fillText("Congratulation, you won!", 210, 170);
+      allEnemies = [];
+      this.x = 200;
+      this.y = 300;
+      console.log('v');
+    }
+}
 
 
 // This listens for key presses and sends the keys to your
