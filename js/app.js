@@ -1,3 +1,4 @@
+let win = 0;
 
 // Enemies our player must avoid
 function Enemy(x, y, v) {
@@ -12,8 +13,6 @@ function Enemy(x, y, v) {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 };
-
-
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -53,9 +52,16 @@ Player.prototype.update = function() {
   this.winGame();
 };
 
-//Draw player image to canvas
+//Draw player image and winning message to canvas
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  if(win==1){
+      ctx.textAlign='center';
+      ctx.fillStyle = "white";
+      ctx.font = "40px Forte Regular";
+      ctx.fillText("Congratulation, you won!", ctx.canvas.width/2, 100);
+      ctx.fillText("Refresh the page to start again", ctx.canvas.width/2, 500 )
+    }
 };
 
 //Handle key presses and moves the player within the canvas
@@ -78,8 +84,6 @@ Player.prototype.handleInput = function(key) {
       break;
     }
   }
-
-
 };
 
 // Now instantiate your objects.
@@ -98,24 +102,19 @@ Player.prototype.collision = function() {
         this.y + this.height > allEnemies[i].y) {
           this.x = 200;
 				  this.y = 300;
-        }
- }
+    }
+  }
 }
 
 Player.prototype.winGame = function() {
   if(this.y == -20 && (this.x == 0 || this.x == 100 || this.x == 200
     || this.x == 300 || this.x == 400)) {
-      ctx.textAlign='center';
-      ctx.fillStyle = "white";
-      ctx.font = "20px Forte Regular";
-      ctx.fillText("Congratulation, you won!", 210, 170);
       allEnemies = [];
       this.x = 200;
       this.y = 300;
-      console.log('v');
-    }
+      win = 1;
+  }
 }
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
